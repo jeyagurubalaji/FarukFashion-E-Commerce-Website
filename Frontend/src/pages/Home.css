@@ -1,0 +1,194 @@
+.hero {
+  position: relative;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+[data-theme='dark'] .hero {
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(201, 162, 39, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(201, 162, 39, 0.08) 0%, transparent 40%),
+    linear-gradient(180deg, #0a0a0a 0%, #141210 50%, #0a0a0a 100%);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a227' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  text-align: center;
+  padding: 3rem 1.25rem;
+  width: 100%;
+}
+
+.hero-bismillah {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  text-align: center;
+  margin: 0 auto 0.5rem;
+}
+
+[data-theme='dark'] .hero h1 {
+  color: #c9a227;
+  text-shadow:
+    0 0 20px rgba(201, 162, 39, 0.45),
+    0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.hero-tag {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--gold);
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+[data-theme='dark'] .hero-tag {
+  color: #e8d48b;
+}
+
+.hero-desc {
+  color: var(--gold);
+  max-width: 560px;
+  margin: 0 auto 1.75rem;
+  font-size: 0.95rem;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+[data-theme='dark'] .hero-desc {
+  color: #c9a227;
+  text-shadow: 0 0 12px rgba(201, 162, 39, 0.35);
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.offer-strip {
+  position: relative;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
+  color: #0a0a0a;
+  padding: 0.75rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+}
+
+.offer-item strong {
+  margin-right: 0.5rem;
+}
+
+.section {
+  padding: 3.5rem 0;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.25rem;
+}
+
+.category-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem 1rem;
+  text-align: center;
+  transition: all 0.25s;
+  color: inherit;
+}
+
+.category-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-gold);
+}
+
+.cat-emoji {
+  font-size: 2.25rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.cat-name {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  letter-spacing: 0.03em;
+}
+
+.trust-banner {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 3rem 0;
+  text-align: center;
+}
+
+[data-theme='dark'] .trust-banner {
+  background: linear-gradient(180deg, #1a1508, #0a0a0a);
+  border-color: #2e2a22;
+}
+
+.trust-banner h2 {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  color: var(--gold);
+  margin-bottom: 2rem;
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.trust-grid h3 {
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+
+.trust-grid p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hero {
+    min-height: 380px;
+  }
+}
