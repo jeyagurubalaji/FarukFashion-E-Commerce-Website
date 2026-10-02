@@ -280,3 +280,127 @@
     justify-self: center;
   }
 }
+
+/* Keep mobile elements hidden on desktop screens */
+.mobile-only,
+.mobile-only-controls {
+  display: none !important;
+}
+
+/* Mobile Responsiveness (768px and below) */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: flex !important;
+  }
+
+  .mobile-only-controls {
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .navbar-main-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+  }
+
+  /* Mobile Drawer Container */
+  .navbar-links {
+    display: none;
+    flex-direction: column;
+    background-color: var(--bg-card, #121212);
+    padding: 1rem;
+    border-top: 1px solid var(--border, #222);
+  }
+
+  .navbar-links.open {
+    display: flex;
+  }
+
+  .navbar-links .container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    width: 100%;
+  }
+
+  /* Mobile Search Form inside Drawer */
+  .navbar-links .search-form.mobile-only {
+    display: flex !important;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .navbar-links .search-form.mobile-only input {
+    flex: 1;
+    padding: 0.5rem 0.8rem;
+    border-radius: 4px;
+    border: 1px solid var(--border, #333);
+    background: var(--bg-input, #1a1a1a);
+    color: var(--text-main, #fff);
+  }
+
+  .navbar-links .search-form.mobile-only button {
+    padding: 0.5rem 0.8rem;
+    background: var(--gold, #c5a059);
+    border: none;
+    color: #000;
+    border-radius: 4px;
+  }
+
+  /* Mobile User Section inside Drawer */
+  .mobile-user-section {
+    width: 100%;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border, #333);
+    margin-bottom: 0.5rem;
+  }
+
+  .mobile-user-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    width: 100%;
+  }
+
+  .mobile-profile-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gold, #c5a059);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .mobile-admin-link {
+    color: var(--text-secondary, #aaa);
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+
+  .mobile-logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px solid #ff4d4d;
+    color: #ff4d4d;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    width: fit-content;
+    font-size: 0.85rem;
+  }
+
+  .mobile-login-link {
+    color: var(--gold, #c5a059);
+    text-decoration: none;
+    font-weight: 600;
+  }
+}
