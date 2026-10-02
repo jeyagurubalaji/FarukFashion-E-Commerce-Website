@@ -24,6 +24,7 @@ export default function Navbar() {
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
   const { isDark, toggleTheme } = useTheme();
+
   const handleSearch = (e) => {
     e.preventDefault();
     if (search.trim()) {
@@ -74,20 +75,21 @@ export default function Navbar() {
             </div>
           </Link>
 
-          <div className="navbar-actions">
-              <button
-                   type="button"
-                   className="nav-icon"
-                   onClick={toggleTheme}
-                   title={isDark ? 'Light mode' : 'Dark mode'}
-              >
+          {/* Desktop Only Actions */}
+          <div className="navbar-actions desktop-only">
+            <button
+              type="button"
+              className="nav-icon"
+              onClick={toggleTheme}
+              title={isDark ? 'Light mode' : 'Dark mode'}
+            >
               {isDark ? <FiSun size={20} /> : <FiMoon size={20} />}
-             </button>
+            </button>
 
-             <Link to="/cart" className="nav-icon" title="Cart">
-             <FiShoppingBag size={22} />
-                 {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
-              </Link>
+            <Link to="/cart" className="nav-icon" title="Cart">
+              <FiShoppingBag size={22} />
+              {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
+            </Link>
 
             {isAuthenticated ? (
               <div className="user-menu">
@@ -117,10 +119,15 @@ export default function Navbar() {
                   <FiLogOut size={20} />
                 </button>
               </div>
-            ) : null}
+            ) : (
+              <Link to="/login" className="nav-profile">
+                Login
+              </Link>
+            )}
           </div>
 
-          <form className="search-form" onSubmit={handleSearch}>
+          {/* Desktop Search Form */}
+          <form className="search-form desktop-only" onSubmit={handleSearch}>
             <input
               type="text"
               placeholder="Search bags, trolleys..."
@@ -131,11 +138,84 @@ export default function Navbar() {
               <FiSearch size={18} />
             </button>
           </form>
+
+          {/* Mobile Right Controls (Theme & Cart Icons outside drawer) */}
+          <div className="mobile-only-controls">
+            <button
+              type="button"
+              className="nav-icon"
+              onClick={toggleTheme}
+              title={isDark ? 'Light mode' : 'Dark mode'}
+            >
+              {isDark ? <FiSun size={20} /> : <FiMoon size={20} />}
+            </button>
+            <Link to="/cart" className="nav-icon" title="Cart" onClick={() => setMenuOpen(false)}>
+              <FiShoppingBag size={22} />
+              {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
+            </Link>
+          </div>
         </div>
       </div>
 
+      {/* Navigation Links + Mobile Drawer */}
       <nav className={`navbar-links ${menuOpen ? 'open' : ''}`}>
         <div className="container">
+          {/* Mobile Search Bar inside Drawer */}
+          <form className="search-form mobile-only" onSubmit={handleSearch}>
+            <input
+              type="text"
+              placeholder="Search bags, trolleys..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button type="submit" aria-label="Search">
+              <FiSearch size={18} />
+            </button>
+          </form>
+
+          {/* Mobile User Profile & Logout Section inside Drawer */}
+          <div className="mobile-user-section mobile-only">
+            {isAuthenticated ? (
+              <div className="mobile-user-container">
+                <Link
+                  to="/profile"
+                  className="mobile-profile-link"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <FiUser size={18} />
+                  <span>{displayName}</span>
+                </Link>
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    className="mobile-admin-link"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Admin Panel
+                  </Link>
+                )}
+                <button
+                  type="button"
+                  className="mobile-logout-btn"
+                  onClick={() => {
+                    logout();
+                    setMenuOpen(false);
+                  }}
+                >
+                  <FiLogOut size={18} /> Logout
+                </button>
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                className="mobile-login-link"
+                onClick={() => setMenuOpen(false)}
+              >
+                Login / Register
+              </Link>
+            )}
+          </div>
+
           <NavLink to="/" end onClick={() => setMenuOpen(false)}>
             Home
           </NavLink>
@@ -157,11 +237,6 @@ export default function Navbar() {
           {isAuthenticated && (
             <NavLink to="/orders" onClick={() => setMenuOpen(false)}>
               My Orders
-            </NavLink>
-          )}
-          {isAuthenticated && isAdmin && (
-            <NavLink to="/admin" onClick={() => setMenuOpen(false)}>
-              Admin Panel
             </NavLink>
           )}
         </div>
