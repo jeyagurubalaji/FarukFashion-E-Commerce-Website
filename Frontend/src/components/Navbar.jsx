@@ -75,7 +75,7 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop Only Actions */}
+          {/* Desktop Actions */}
           <div className="navbar-actions desktop-only">
             <button
               type="button"
@@ -139,7 +139,7 @@ export default function Navbar() {
             </button>
           </form>
 
-          {/* Mobile Right Controls (Theme & Cart Icons outside drawer) */}
+          {/* Mobile Header Controls */}
           <div className="mobile-only-controls">
             <button
               type="button"
@@ -160,7 +160,12 @@ export default function Navbar() {
       {/* Navigation Links + Mobile Drawer */}
       <nav className={`navbar-links ${menuOpen ? 'open' : ''}`}>
         <div className="container">
-          {/* Mobile Search Bar inside Drawer */}
+          {/* 1. Home */}
+          <NavLink to="/" end onClick={() => setMenuOpen(false)}>
+            Home
+          </NavLink>
+
+          {/* 2. Mobile Search Bar (Right after Home) */}
           <form className="search-form mobile-only" onSubmit={handleSearch}>
             <input
               type="text"
@@ -173,7 +178,32 @@ export default function Navbar() {
             </button>
           </form>
 
-          {/* Mobile User Profile & Logout Section inside Drawer */}
+          {/* 3. Category Links */}
+          {categories.map((c) => (
+            <NavLink
+              key={c.value}
+              to={`/products/category/${c.value}`}
+              onClick={() => setMenuOpen(false)}
+            >
+              {c.label}
+            </NavLink>
+          ))}
+
+          <NavLink to="/about" onClick={() => setMenuOpen(false)}>
+            About
+          </NavLink>
+          <NavLink to="/contact" onClick={() => setMenuOpen(false)}>
+            Contact
+          </NavLink>
+
+          {/* 4. My Orders */}
+          {isAuthenticated && (
+            <NavLink to="/orders" onClick={() => setMenuOpen(false)}>
+              My Orders
+            </NavLink>
+          )}
+
+          {/* 5. Profile & Logout Section (Positioned at the end) */}
           <div className="mobile-user-section mobile-only">
             {isAuthenticated ? (
               <div className="mobile-user-container">
@@ -185,15 +215,17 @@ export default function Navbar() {
                   <FiUser size={18} />
                   <span>{displayName}</span>
                 </Link>
+
                 {isAdmin && (
-                  <Link
+                  <NavLink
                     to="/admin"
-                    className="mobile-admin-link"
                     onClick={() => setMenuOpen(false)}
+                    className="mobile-admin-link"
                   >
                     Admin Panel
-                  </Link>
+                  </NavLink>
                 )}
+
                 <button
                   type="button"
                   className="mobile-logout-btn"
@@ -215,30 +247,6 @@ export default function Navbar() {
               </Link>
             )}
           </div>
-
-          <NavLink to="/" end onClick={() => setMenuOpen(false)}>
-            Home
-          </NavLink>
-          {categories.map((c) => (
-            <NavLink
-              key={c.value}
-              to={`/products/category/${c.value}`}
-              onClick={() => setMenuOpen(false)}
-            >
-              {c.label}
-            </NavLink>
-          ))}
-          <NavLink to="/about" onClick={() => setMenuOpen(false)}>
-            About
-          </NavLink>
-          <NavLink to="/contact" onClick={() => setMenuOpen(false)}>
-            Contact
-          </NavLink>
-          {isAuthenticated && (
-            <NavLink to="/orders" onClick={() => setMenuOpen(false)}>
-              My Orders
-            </NavLink>
-          )}
         </div>
       </nav>
     </header>
