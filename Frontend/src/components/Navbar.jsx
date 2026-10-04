@@ -14,7 +14,10 @@ const categories = [
   { label: 'College Bags', value: 'COLLEGE_BAGS' },
   { label: 'Kids Bags', value: 'KIDS_BAGS' },
   { label: 'Office Bags', value: 'OFFICE_BAGS' },
-  { label: 'Sling Bags', value: 'SLING_BAGS' }
+  { label: 'Sling Bags', value: 'SLING_BAGS' },
+  { label: 'Travelling Kit', value: 'TRAVELLING_KIT' },
+  { label: 'Laptop Bags', value: 'LAPTOP_BAGS' },
+  { label: 'Other', value: 'OTHER' }
 ];
 
 export default function Navbar() {
