@@ -11,7 +11,11 @@ const categoryCards = [
   { name: 'School Bags', path: 'SCHOOL_BAGS', emoji: '🎒' },
   { name: 'College Bags', path: 'COLLEGE_BAGS', emoji: '📚' },
   { name: 'Kids Bags', path: 'KIDS_BAGS', emoji: '🦄' },
-  { name: 'Office Bags', path: 'OFFICE_BAGS', emoji: '💼' }
+  { name: 'Office Bags', path: 'OFFICE_BAGS', emoji: '💼' },
+  { name: 'Sling Bags', path: 'SLING_BAGS', emoji: '👛' },
+  { name: 'Travelling Kit', path: 'TRAVELLING_KIT', emoji: '✈️' },
+  { name: 'Laptop Bags', path: 'LAPTOP_BAGS', emoji: '💻' },
+  { name: 'Other', path: 'OTHER', emoji: '🛍️' }
 ];
 
 export default function Home() {
@@ -54,7 +58,8 @@ export default function Home() {
           <h1>FARUK FASHION</h1>
           <p className="hero-tag">Style That Speaks</p>
           <p className="hero-desc">
-            Premium Handbags · Trolley Bags · School Bags · College Bags · Kids Bags
+            Premium Handbags · Trolley Bags · School Bags · College Bags · Kids Bags ·
+            Travelling Kit · Laptop Bags · Other
           </p>
           <div className="hero-actions">
             <Link to="/products" className="btn btn-primary">Shop Collection</Link>
