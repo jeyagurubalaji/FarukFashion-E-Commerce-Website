@@ -1,28 +1,31 @@
-/**
- * API base — matches api.js (VITE_API_URL or default Render URL)
- */
+import { cloudinaryDisplay } from './cloudinary';
+
 export const API_BASE = (
   import.meta.env.VITE_API_URL ||
   import.meta.env.VITE_API_BASE_URL ||
   'https://farukfashion-e-commerce-web.onrender.com/api'
 ).replace(/\/$/, '');
 
-/** Origin without trailing /api */
 export const API_ORIGIN = API_BASE.replace(/\/api$/, '');
 
 /**
- * Fix image paths on Vercel:
- * /api/uploads/xxx → https://your-backend.onrender.com/api/uploads/xxx
+ * @param {string} url
+ * @param {number} [width=600] - used for Cloudinary optimization
  */
-export function mediaUrl(url) {
+export function mediaUrl(url, width = 600) {
   if (!url) return '';
+
   if (
     url.startsWith('http://') ||
     url.startsWith('https://') ||
     url.startsWith('data:')
   ) {
+    if (url.includes('res.cloudinary.com')) {
+      return cloudinaryDisplay(url, width);
+    }
     return url;
   }
+
   if (url.startsWith('/api/')) {
     return `${API_ORIGIN}${url}`;
   }
