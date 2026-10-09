@@ -48,19 +48,15 @@
   gap: 2.5rem;
 }
 
-.footer-brand .logo-mark {
+.footer-logo-img {
   width: 56px;
   height: 56px;
-  border: 2px solid var(--gold);
+  object-fit: contain;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.2rem;
-  color: var(--gold);
+  border: 2px solid var(--gold);
   margin-bottom: 0.75rem;
+  background: #ffffff;
+  display: block;
 }
 
 .footer-brand h3 {
