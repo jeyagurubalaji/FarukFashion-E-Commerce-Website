@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { FiMapPin, FiPhone, FiMail, FiShield, FiAward, FiPackage, FiHeart } from 'react-icons/fi';
+import logoImg from '../assets/logo.png';
 import './Footer.css';
 
 export default function Footer() {
@@ -39,16 +40,16 @@ export default function Footer() {
       </div>
 
       <div className="footer-main">
-        <div className="container footer-grid">
-          <div className="footer-brand">
-            <div className="logo-mark">FF</div>
-            <h3>FARUK FASHION</h3>
-            <p>Style That Speaks</p>
-            <p className="footer-desc">
-              Premium Handbags, Trolley Bags, School Bags, College Bags, Kids Bags,
-              Office Bags, Sling Bags & Travelling Kits.
-            </p>
-          </div>
+              <div className="container footer-grid">
+                <div className="footer-brand">
+                  <img src={logoImg} alt="Faruk Fashion" className="footer-logo-img" />
+                  <h3>FARUK FASHION</h3>
+                  <p>Style That Speaks</p>
+                  <p className="footer-desc">
+                    Premium Handbags, Trolley Bags, School Bags, College Bags, Kids Bags,
+                    Office Bags, Sling Bags & Travelling Kits.
+                  </p>
+      </div>
 
           <div className="footer-links">
             <h4>Quick Links</h4>
