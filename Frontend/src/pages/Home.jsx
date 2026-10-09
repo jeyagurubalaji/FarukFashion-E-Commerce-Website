@@ -26,26 +26,37 @@ export default function Home() {
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        const [feat, bans] = await Promise.all([
-          productAPI.featured({ size: 8 }),
-          offerAPI.banners().catch(() => ({ data: [] }))
-        ]);
-        setFeatured(feat.data.content || feat.data || []);
-        setBanners(bans.data || []);
+      const load = async () => {
+        try {
+          const [feat, bans] = await Promise.all([
+            productAPI.featured({ size: 8 }),
+            offerAPI.banners().catch(() => ({ data: [] }))
+          ]);
 
-        if (isAuthenticated) {
-          const rec = await productAPI.recommendations().catch(() => ({ data: [] }));
-          setRecommended(rec.data || []);
+          let list = feat.data?.content || feat.data || [];
+          if (!Array.isArray(list)) list = [];
+
+
+          if (list.length === 0) {
+            const all = await productAPI.getAll({ size: 12, page: 0 });
+            list = all.data?.content || all.data || [];
+            if (!Array.isArray(list)) list = [];
+          }
+
+          setFeatured(list);
+          setBanners(bans.data || []);
+
+          if (isAuthenticated) {
+            const rec = await productAPI.recommendations().catch(() => ({ data: [] }));
+            setRecommended(rec.data || []);
+          }
+        } catch (e) {
+          console.error(e);
+        } finally {
+          setLoading(false);
         }
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setLoading(false);
-      }
-    };
-    load();
+      };
+      load();
   }, [isAuthenticated]);
 
   return (
