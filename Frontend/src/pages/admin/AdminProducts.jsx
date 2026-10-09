@@ -3,6 +3,7 @@ import { adminAPI } from '../../services/api';
 import { toast } from 'react-toastify';
 import { FiPlus, FiEdit2, FiTrash2, FiUpload } from 'react-icons/fi';
 import { mediaUrl } from '../../utils/mediaUrl';
+import { uploadToCloudinary } from '../../utils/cloudinary';
 
 const CATEGORIES = [
   'HANDBAGS', 'TROLLEY_BAGS', 'SCHOOL_BAGS', 'COLLEGE_BAGS',
@@ -90,33 +91,39 @@ export default function AdminProducts() {
     setForm((f) => ({ ...f, [name]: type === 'checkbox' ? checked : value }));
   };
 
-    const handleImageUpload = async (e) => {
-      const files = Array.from(e.target.files || []);
-      if (!files.length) return;
-      setUploading(true);
-      try {
-        const uploaded = [];
-        for (const file of files) {
-          const res = await adminAPI.uploadImage(file);
-          const url = res.data.url;
-          uploaded.push(url);
+      const handleImageUpload = async (e) => {
+        const files = Array.from(e.target.files || []);
+        if (!files.length) return;
+        setUploading(true);
+        try {
+          const uploaded = [];
+          for (const file of files) {
+            let url;
+            try {
+              url = await uploadToCloudinary(file);
+            } catch (err) {
+              console.warn('Cloudinary failed, using backend upload', err);
+              const res = await adminAPI.uploadImage(file);
+              url = res.data.url;
+            }
+            uploaded.push(url);
+          }
+          setForm((f) => {
+            const images = [...(f.images || []), ...uploaded];
+            return {
+              ...f,
+              images,
+              mainImage: f.mainImage || uploaded[0] || ''
+            };
+          });
+          toast.success(`${uploaded.length} image(s) uploaded`);
+        } catch {
+          toast.error('Image upload failed');
+        } finally {
+          setUploading(false);
+          e.target.value = '';
         }
-        setForm((f) => {
-          const images = [...(f.images || []), ...uploaded];
-          return {
-            ...f,
-            images,
-            mainImage: f.mainImage || uploaded[0] || ''
-          };
-        });
-        toast.success(`${uploaded.length} image(s) uploaded`);
-      } catch {
-        toast.error('Image upload failed');
-      } finally {
-        setUploading(false);
-        e.target.value = '';
-      }
-    };
+      };
 
     const removeImage = (url) => {
       setForm((f) => {
@@ -189,7 +196,7 @@ export default function AdminProducts() {
         }
       };
 
-    const imgSrc = (url) => mediaUrl(url);
+    const imgSrc = (url) => mediaUrl(url, 200);
 
   return (
     <div>
