@@ -3,6 +3,7 @@ import { useCart } from '../context/CartContext';
 import { toast } from 'react-toastify';
 import { FiShoppingBag } from 'react-icons/fi';
 import { mediaUrl } from '../utils/mediaUrl';
+import logoImg from '../assets/logo.png';
 import './ProductCard.css';
 
 export default function ProductCard({ product, priority = false }) {
@@ -40,7 +41,7 @@ export default function ProductCard({ product, priority = false }) {
           />
         ) : (
           <div className="product-placeholder">
-            <span>FF</span>
+              <img src={logoImg} alt="Faruk Fashion" className="placeholder-logo" />
           </div>
         )}
         {hasDiscount && (
