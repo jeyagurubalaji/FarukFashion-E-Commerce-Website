@@ -49,14 +49,15 @@
 }
 
 .footer-logo-img {
-  width: 56px;
-  height: 56px;
+  width: 80px;
+  height: auto;
   object-fit: contain;
-  border-radius: 50%;
-  border: 2px solid var(--gold);
+  border-radius: 0;
+  border: none;
   margin-bottom: 0.75rem;
-  background: #ffffff;
+  background: transparent;
   display: block;
+  padding: 0;
 }
 
 .footer-brand h3 {
