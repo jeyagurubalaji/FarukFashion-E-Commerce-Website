@@ -5,12 +5,13 @@ import { FiShoppingBag } from 'react-icons/fi';
 import { mediaUrl } from '../utils/mediaUrl';
 import './ProductCard.css';
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, priority = false }) {
   const { addToCart } = useCart();
   const navigate = useNavigate();
 
   const price = product.discountPrice || product.price;
   const hasDiscount = product.discountPrice && product.discountPrice < product.price;
+  const img = mediaUrl(product.mainImage);
 
   const handleAdd = (e) => {
     e.preventDefault();
@@ -27,8 +28,16 @@ export default function ProductCard({ product }) {
   return (
     <Link to={`/products/${product.id}`} className="product-card card">
       <div className="product-image-wrap">
-        {product.mainImage ? (
-          <img src={mediaUrl(product.mainImage)} alt={product.name} loading="lazy" />
+        {img ? (
+          <img
+            src={img}
+            alt={product.name || 'Product'}
+            width={400}
+            height={400}
+            loading={priority ? 'eager' : 'lazy'}
+            decoding="async"
+            fetchPriority={priority ? 'high' : 'auto'}
+          />
         ) : (
           <div className="product-placeholder">
             <span>FF</span>
