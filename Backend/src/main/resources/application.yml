@@ -68,11 +68,11 @@ twilio:
 
 app:
   name: Faruk Fashion
-  support-email: ${SUPPORT_EMAIL:support@farukfashion.com}
-  support-phone: "${SUPPORT_PHONE:+91 93442 82751}"
-  admin-phone: "${ADMIN_PHONE:+91 93442 82751}"
+  support-email: ${SUPPORT_EMAIL:jgbalajinfinity006@gmail.com}
+  support-phone: ${SUPPORT_PHONE:+91 6369456650}
+  admin-phone: ${ADMIN_PHONE:+91 6369456650}
   frontend-url: ${FRONTEND_URL:http://localhost:3000}
-  seller-email: ${SELLER_EMAIL:orders@farukfashion.com}
+  seller-email: ${SELLER_EMAIL:jgbalajinfinity006@gmail.com}
   upload-dir: ${UPLOAD_DIR:uploads}
   notifications:
     email-enabled: true
