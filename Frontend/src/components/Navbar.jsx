@@ -47,12 +47,12 @@ export default function Navbar() {
       <div className="navbar-top">
         <div className="container navbar-top-inner">
           <a
-            href="https://wa.me/919344282751"
+            href="https://wa.me/916369456650"
             target="_blank"
             rel="noreferrer"
             className="navbar-whatsapp"
           >
-            WhatsApp: +91 93442 82751
+            WhatsApp: +91 6369456650
           </a>
           <span className="navbar-bismillah">IN THE NAME OF ALLAH</span>
           <span className="navbar-top-spacer" />
