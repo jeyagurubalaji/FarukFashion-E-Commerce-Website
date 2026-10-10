@@ -47,7 +47,7 @@ public class DataInitializer implements CommandLineRunner {
     private void seedAdmin() {
         User admin = User.builder()
                 .email("admin@farukfashion.com")
-                .phone("9344282751")
+                .phone("6369456650")
                 .password(passwordEncoder.encode("admin123"))
                 .firstName("Faruk")
                 .lastName("Admin")
