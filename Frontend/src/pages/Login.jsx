@@ -10,7 +10,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
-  const API = import.meta.env.VITE_API_URL || 'https://farukfashion-backend.onrender.com/api';
+  const API = import.meta.env.VITE_API_URL || 'https://farukfashion.onrender.com/api';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
