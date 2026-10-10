@@ -36,7 +36,7 @@ public class ContactController {
         }
         return ResponseEntity.ok(Map.of(
                 "message", "Thank you! We will get back to you within 24 hours.",
-                "supportPhone", "+91 93442 82751"
+                "supportPhone", "+91 6369456650"
         ));
     }
 
@@ -46,9 +46,9 @@ public class ContactController {
                 "storeName", "Faruk Fashion",
                 "tagline", "Style That Speaks",
                 "address", "35, Kamarajar Street, Thenkarai, Periyakulam-625 601",
-                "phone", "+91 93442 82751",
-                "whatsapp", "+91 93442 82751",
-                "email", "support@farukfashion.com",
+                "phone", "+91 6369456650",
+                "whatsapp", "+91 6369456650",
+                "email", "jgbalajinfinity006@gmail.com",
                 "supportHours", "24×7 Customer Support",
                 "about", "Faruk Fashion offers premium quality Handbags, Trolley Bags, School Bags, " +
                         "College Bags, Kids Bags, Office Bags, Sling Bags and Travelling Kits. " +
