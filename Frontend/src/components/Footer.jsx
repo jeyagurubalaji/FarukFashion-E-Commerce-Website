@@ -64,10 +64,10 @@ export default function Footer() {
           <div className="footer-contact">
             <h4>Visit Us</h4>
             <p><FiMapPin /> 35, Kamarajar Street, Thenkarai,<br />Periyakulam-625 601</p>
-            <p><FiPhone /> <a href="tel:+919344282751">+91 93442 82751</a></p>
-            <p><FiMail /> support@farukfashion.com</p>
+            <p><FiPhone /> <a href="tel:+916369456650">+91 6369456650</a></p>
+            <p><FiMail /> jgbalajinfinity006@gmail.com</p>
             <a
-              href="https://wa.me/919344282751"
+              href="https://wa.me/916369456650"
               target="_blank"
               rel="noreferrer"
               className="btn btn-primary footer-wa"
