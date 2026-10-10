@@ -20,17 +20,26 @@ export default function Contact() {
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      await contactAPI.send(form);
-      toast.success('Message sent! We will respond within 24 hours.');
-      setForm({ name: '', email: '', phone: '', subject: '', message: '' });
-    } catch {
-      toast.error('Failed to send. Please WhatsApp us directly.');
-    } finally {
-      setLoading(false);
-    }
+      e.preventDefault();
+      setLoading(true);
+      try {
+        await Promise.race([
+          contactAPI.send(form),
+          new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('timeout')), 15000)
+          )
+        ]);
+        toast.success('Message sent! We will respond within 24 hours.');
+        setForm({ name: '', email: '', phone: '', subject: '', message: '' });
+      } catch (err) {
+        if (err?.message === 'timeout') {
+          toast.info('Taking longer than usual. You can also WhatsApp us.');
+        } else {
+          toast.error('Failed to send. Please WhatsApp us directly.');
+        }
+      } finally {
+        setLoading(false);
+      }
   };
 
   const card = {
