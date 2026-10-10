@@ -235,6 +235,6 @@ public class NotificationService {
                 + "<pre style='white-space:pre-wrap;font-family:Georgia,serif;'>" + text + "</pre>"
                 + "<hr style='border-color:#c9a227;'>"
                 + "<p style='text-align:center;font-size:12px;color:#888;'>35, Kamarajar Street, Thenkarai, Periyakulam-625 601<br>"
-                + "WhatsApp: +91 93442 82751</p></div></body></html>";
+                + "WhatsApp: +91 6369456650</p></div></body></html>";
     }
 }
