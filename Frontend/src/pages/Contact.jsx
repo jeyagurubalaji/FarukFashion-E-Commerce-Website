@@ -91,7 +91,7 @@ export default function Contact() {
             </div>
           </div>
           <a
-            href="https://wa.me/919344282751"
+            href="https://wa.me/916369456650"
             target="_blank"
             rel="noreferrer"
             className="btn btn-primary"
