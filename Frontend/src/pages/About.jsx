@@ -31,7 +31,7 @@ export default function About() {
         <p>
           35, Kamarajar Street, Thenkarai,<br />
           Periyakulam-625 601<br />
-          WhatsApp / Call: <a href="tel:+919344282751">+91 93442 82751</a>
+          WhatsApp / Call: <a href="tel:+916369456650">+91 6369456650</a>
         </p>
       </div>
     </div>
