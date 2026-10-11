@@ -66,6 +66,9 @@ twilio:
   whatsapp-from: ${TWILIO_WHATSAPP_FROM:+14155238886}
   sms-from: ${TWILIO_SMS_FROM:+14155238886}
 
+resend:
+  api-key: ${RESEND_API_KEY:}
+
 app:
   name: Faruk Fashion
   support-email: ${SUPPORT_EMAIL:jgbalajinfinity006@gmail.com}
