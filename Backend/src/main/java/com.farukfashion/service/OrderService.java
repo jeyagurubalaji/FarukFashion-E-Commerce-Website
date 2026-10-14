@@ -143,7 +143,6 @@ public class OrderService {
     }
 
     private void confirmOrder(Order order, User user) {
-        // Reduce stock
         for (Order.OrderItem item : order.getItems()) {
             productService.reduceStock(item.getProductId(), item.getQuantity());
         }
@@ -151,16 +150,26 @@ public class OrderService {
         order.setStatus(Order.OrderStatus.CONFIRMED);
         orderRepository.save(order);
 
-        // Logs
-        logService.logPurchase(order.getUserId(), order.getCustomerEmail(),
-                order.getId(), order.getOrderNumber(),
-                order.getTotalAmount().doubleValue(),
-                "ORDER_PLACED",
-                Map.of("items", order.getItems().size(), "payment", order.getPaymentMethod()));
+        try {
+            logService.logPurchase(order.getUserId(), order.getCustomerEmail(),
+                    order.getId(), order.getOrderNumber(),
+                    order.getTotalAmount().doubleValue(),
+                    "ORDER_PLACED",
+                    Map.of("items", order.getItems().size(), "payment", order.getPaymentMethod()));
+        } catch (Exception ignored) {
+        }
 
-        // Notifications to buyer + seller (WhatsApp, SMS, Email)
+        // Never block checkout / verify on email / SMS / WhatsApp
         if (user != null) {
-            notificationService.sendOrderConfirmation(order, user);
+            final Order orderCopy = order;
+            final User userCopy = user;
+            java.util.concurrent.CompletableFuture.runAsync(() -> {
+                try {
+                    notificationService.sendOrderConfirmation(orderCopy, userCopy);
+                } catch (Exception e) {
+                    // log only — order already confirmed
+                }
+            });
         }
     }
 
