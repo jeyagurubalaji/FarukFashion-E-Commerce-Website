@@ -6,14 +6,13 @@ import com.farukfashion.repository.PasswordOtpRepository;
 import com.farukfashion.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +22,7 @@ public class PasswordResetService {
     private final UserRepository userRepository;
     private final PasswordOtpRepository otpRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JavaMailSender mailSender;
+    private final EmailService emailService;
 
     public Map<String, String> sendOtp(String email) {
         String normalized = email.toLowerCase().trim();
@@ -41,27 +40,13 @@ public class PasswordResetService {
                 .expiresAt(LocalDateTime.now().plusMinutes(10))
                 .build());
 
-        try {
-            SimpleMailMessage msg = new SimpleMailMessage();
-            msg.setTo(normalized);
-            msg.setSubject("Faruk Fashion – Password Reset OTP");
-            msg.setText(
-                    "Hello " + (user.getFirstName() != null ? user.getFirstName() : "") + ",\n\n" +
-                            "Your OTP to reset password is: " + otp + "\n\n" +
-                            "Valid for 10 minutes. Do not share this code.\n\n" +
-                            "— Faruk Fashion"
-            );
-            mailSender.send(msg);
-            log.info("Password OTP sent to {}", normalized);
-        } catch (Exception e) {
-            log.error("Failed to send OTP email to {}: {}", normalized, e.getMessage());
-            log.warn("DEV OTP for {} = {} (email failed; use this OTP)", normalized, otp);
-            return Map.of(
-                    "message", "OTP generated. If email did not arrive, check server console (dev).",
-                    "email", normalized
-            );
-        }
+        // Send in background — API returns immediately
+        String firstName = user.getFirstName();
+        CompletableFuture.runAsync(() ->
+                emailService.sendPasswordOtp(normalized, firstName, otp)
+        );
 
+        log.info("Password OTP generated for {} (email sending in background)", normalized);
         return Map.of("message", "OTP sent to your email", "email", normalized);
     }
 
