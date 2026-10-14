@@ -19,11 +19,14 @@ public class EmailService {
     @Value("${app.support-email}")
     private String supportEmail;
 
+    @Value("${app.name:Faruk Fashion}")
+    private String appName;
+
     private final RestTemplate restTemplate = new RestTemplate();
 
     public void send(String to, String subject, String textBody) {
         if (resendApiKey == null || resendApiKey.isBlank()) {
-            log.warn("RESEND_API_KEY not set — email skipped");
+            log.warn("RESEND_API_KEY not set — email skipped. To: {}", to);
             return;
         }
         try {
@@ -32,7 +35,7 @@ public class EmailService {
             headers.setBearerAuth(resendApiKey);
 
             Map<String, Object> body = Map.of(
-                    "from", "Faruk Fashion <onboarding@resend.dev>",
+                    "from", appName + " <onboarding@resend.dev>",
                     "to", List.of(to),
                     "subject", subject,
                     "text", textBody
@@ -46,7 +49,7 @@ public class EmailService {
             );
             log.info("Email sent via Resend to {} status={}", to, res.getStatusCode());
         } catch (Exception e) {
-            log.error("Resend email failed: {}", e.getMessage());
+            log.error("Resend email failed to {}: {}", to, e.getMessage());
         }
     }
 
@@ -55,5 +58,14 @@ public class EmailService {
                 + "Phone: " + (phone != null ? phone : "") + "\n\n"
                 + message;
         send(supportEmail, "Contact Form: " + subject, text);
+    }
+
+    public void sendPasswordOtp(String toEmail, String firstName, String otp) {
+        String name = firstName != null && !firstName.isBlank() ? firstName : "Customer";
+        String text = "Hello " + name + ",\n\n"
+                + "Your OTP to reset password is: " + otp + "\n\n"
+                + "Valid for 10 minutes. Do not share this code.\n\n"
+                + "— " + appName;
+        send(toEmail, appName + " – Password Reset OTP", text);
     }
 }
