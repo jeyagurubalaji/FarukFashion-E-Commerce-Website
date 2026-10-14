@@ -13,19 +13,25 @@ export default function ForgotPassword() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const sendOtp = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const res = await authAPI.forgotPassword({ email: email.trim() });
-      toast.success(res.data?.message || 'OTP sent to your email');
-      setStep(2);
-    } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to send OTP');
-    } finally {
-      setLoading(false);
-    }
-  };
+    const sendOtp = async (e) => {
+      e.preventDefault();
+      setLoading(true);
+      try {
+        const timeout = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Request timed out. Try again.')), 15000)
+        );
+        const res = await Promise.race([
+          authAPI.forgotPassword({ email: email.trim() }),
+          timeout
+        ]);
+        toast.success(res.data?.message || 'OTP sent to your email');
+        setStep(2);
+      } catch (err) {
+        toast.error(err.response?.data?.message || err.message || 'Failed to send OTP');
+      } finally {
+        setLoading(false);
+      }
+    };
 
   const verifyOtp = async (e) => {
     e.preventDefault();
