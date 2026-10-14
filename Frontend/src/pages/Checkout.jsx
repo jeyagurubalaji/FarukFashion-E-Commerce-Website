@@ -1,9 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { orderAPI } from '../services/api';
 import { toast } from 'react-toastify';
+
+const API_BASE = (
+  import.meta.env.VITE_API_URL ||
+  'https://farukfashion.onrender.com/api'
+).replace(/\/$/, '');
 
 export default function Checkout() {
   const { cart, totalAmount, totalGst, grandTotal, clearCart } = useCart();
@@ -24,6 +29,12 @@ export default function Checkout() {
 
   const total = grandTotal;
 
+  // Preload Razorpay + ping backend so first click is faster
+  useEffect(() => {
+    loadRazorpay();
+    fetch(`${API_BASE}/health`).catch(() => {});
+  }, []);
+
   const handleChange = (e) => setAddress({ ...address, [e.target.name]: e.target.value });
 
   const loadRazorpay = () =>
@@ -36,118 +47,115 @@ export default function Checkout() {
       document.body.appendChild(script);
     });
 
-    const handlePlaceOrder = async (e) => {
-      e.preventDefault();
-      if (cart.length === 0) return toast.error('Cart is empty');
-      setLoading(true);
+  const handlePlaceOrder = async (e) => {
+    e.preventDefault();
+    if (cart.length === 0) return toast.error('Cart is empty');
+    setLoading(true);
 
-      try {
-        const orderRes = await orderAPI.create({
-          items: cart.map((i) => ({
-            productId: i.productId,
-            quantity: i.quantity,
-            color: i.color,
-            size: i.size
-          })),
-          shippingAddress: address,
-          paymentMethod
-        });
+    try {
+      const orderRes = await orderAPI.create({
+        items: cart.map((i) => ({
+          productId: i.productId,
+          quantity: i.quantity,
+          color: i.color,
+          size: i.size
+        })),
+        shippingAddress: address,
+        paymentMethod
+      });
 
-        const data = orderRes.data;
+      const data = orderRes.data;
 
-        // COD → order already confirmed on backend
-        if (paymentMethod === 'COD') {
-          clearCart();
-          toast.success(`Order placed! #${data.orderNumber}`);
-          navigate('/orders');
-          return;
-        }
+      if (paymentMethod === 'COD') {
+        clearCart();
+        toast.success(`Order placed! #${data.orderNumber}`);
+        navigate('/orders');
+        return;
+      }
 
-        // Online: must open real Razorpay (no mock skip)
-        if (data.mock === true || data.mock === 'true') {
-          toast.error('Payment gateway not configured. Contact support.');
-          return;
-        }
+      if (data.mock === true || data.mock === 'true') {
+        toast.error('Payment gateway not configured. Contact support.');
+        return;
+      }
 
-        if (!data.razorpayOrderId || !data.keyId) {
-          toast.error('Could not start payment. Try again.');
-          return;
-        }
+      if (!data.razorpayOrderId || !data.keyId) {
+        toast.error('Could not start payment. Try again.');
+        return;
+      }
 
-        const loaded = await loadRazorpay();
-        if (!loaded) {
-          toast.error('Failed to load payment gateway. Check internet and try again.');
-          return;
-        }
+      const loaded = await loadRazorpay();
+      if (!loaded) {
+        toast.error('Failed to load payment gateway. Check internet and try again.');
+        return;
+      }
 
-        const options = {
-          key: data.keyId,
-          amount: Number(data.amount),
-          currency: data.currency || 'INR',
-          name: 'Faruk Fashion',
-          description: `Order ${data.orderNumber}`,
-          order_id: data.razorpayOrderId,
-          method: {
-              upi: true,
-              card: true,
-              netbanking: true,
-              wallet: true
-            },
-            // Optional: push UPI higher in the list
-            config: {
-              display: {
-                blocks: {
-                  upi: {
-                    name: 'Pay using UPI',
-                    instruments: [{ method: 'upi' }]
-                  }
-                },
-                sequence: ['block.upi'],
-                preferences: {
-                  show_default_blocks: true   // still show card, netbanking, wallet
-                }
+      const options = {
+        key: data.keyId,
+        amount: Number(data.amount),
+        currency: data.currency || 'INR',
+        name: 'Faruk Fashion',
+        description: `Order ${data.orderNumber}`,
+        order_id: data.razorpayOrderId,
+        method: {
+          upi: true,
+          card: true,
+          netbanking: true,
+          wallet: true
+        },
+        config: {
+          display: {
+            blocks: {
+              upi: {
+                name: 'Pay using UPI',
+                instruments: [{ method: 'upi' }]
               }
             },
-          handler: async (response) => {
-            try {
-              await orderAPI.verifyPayment({
-                orderId: data.orderId,
-                razorpayOrderId: response.razorpay_order_id,
-                razorpayPaymentId: response.razorpay_payment_id,
-                razorpaySignature: response.razorpay_signature
-              });
-              clearCart();
-              toast.success(`Payment successful! Order #${data.orderNumber}`);
-              navigate('/orders');
-            } catch {
-              toast.error('Payment received but verification failed. Contact support with order number.');
+            sequence: ['block.upi'],
+            preferences: {
+              show_default_blocks: true
             }
-          },
-          modal: {
-            ondismiss: () => {
-              toast.info('Payment cancelled. You can try again from cart.');
-              setLoading(false);
-            }
-          },
-          prefill: {
-            name: address.fullName,
-            email: user?.email,
-            contact: address.phone
-          },
-          theme: { color: '#c9a227' }
-        };
+          }
+        },
+        handler: async (response) => {
+          try {
+            await orderAPI.verifyPayment({
+              orderId: data.orderId,
+              razorpayOrderId: response.razorpay_order_id,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpaySignature: response.razorpay_signature
+            });
+            clearCart();
+            toast.success(`Payment successful! Order #${data.orderNumber}`);
+            navigate('/orders');
+          } catch {
+            toast.error('Payment received but verification failed. Contact support with order number.');
+          }
+        },
+        modal: {
+          ondismiss: () => {
+            toast.info('Payment cancelled. You can try again from cart.');
+            setLoading(false);
+          }
+        },
+        prefill: {
+          name: address.fullName,
+          email: user?.email,
+          contact: address.phone
+        },
+        theme: { color: '#c9a227' }
+      };
 
-        const rzp = new window.Razorpay(options);
-        rzp.on('payment.failed', (resp) => {
-          toast.error(resp.error?.description || 'Payment failed');
-          setLoading(false);
-        });
-        rzp.open();
-      } catch (err) {
-        toast.error(err.response?.data?.message || err.message || 'Failed to place order');
-      } finally {
+      const rzp = new window.Razorpay(options);
+      rzp.on('payment.failed', (resp) => {
+        toast.error(resp.error?.description || 'Payment failed');
         setLoading(false);
-      }
+      });
+      rzp.open();
+    } catch (err) {
+      toast.error(err.response?.data?.message || err.message || 'Failed to place order');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (cart.length === 0) {
