@@ -69,26 +69,45 @@ export default function Contact() {
                 </p>
               </div>
             </div>
-            <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.25rem' }}>
-              <FiPhone color="var(--gold)" size={22} />
-              <div>
-                <strong style={{ color: 'var(--text-primary)' }}>Phone / WhatsApp</strong>
-                <p style={{ marginTop: 4 }}>
-                  <a href="https://wa.me/916369456650" target="_blank" rel="noreferrer">
-                    +91 6369456650
-                  </a>
-                </p>
-              </div>
-            </div>
-            <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.25rem' }}>
-              <FiMail color="var(--gold)" size={22} />
-              <div>
-                <strong style={{ color: 'var(--text-primary)' }}>Email</strong>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: 4 }}>
-                  jgbalajinfinity006@gmail.com
-                </p>
-              </div>
-            </div>
+                        <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.25rem' }}>
+                          <FiMapPin color="var(--gold)" size={22} />
+                          <div>
+                            <strong style={{ color: 'var(--text-primary)' }}>Store Address</strong>
+                            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: 4 }}>
+                              <a
+                                href="https://www.google.com/maps/search/?api=1&query=35+Kamarajar+Street+Thenkarai+Periyakulam+625601"
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                35, Kamarajar Street, Thenkarai,
+                                <br />
+                                Periyakulam-625 601
+                              </a>
+                            </p>
+                          </div>
+                        </div>
+                        <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.25rem' }}>
+                          <FiPhone color="var(--gold)" size={22} />
+                          <div>
+                            <strong style={{ color: 'var(--text-primary)' }}>Phone / WhatsApp</strong>
+                            <p style={{ marginTop: 4 }}>
+                              <a href="https://wa.me/916369456650" target="_blank" rel="noreferrer">
+                                +91 6369456650
+                              </a>
+                              {' · '}
+                              <a href="tel:+916369456650">Call</a>
+                            </p>
+                          </div>
+                        </div>
+                        <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.25rem' }}>
+                          <FiMail color="var(--gold)" size={22} />
+                          <div>
+                            <strong style={{ color: 'var(--text-primary)' }}>Email</strong>
+                            <p style={{ fontSize: '0.9rem', marginTop: 4 }}>
+                              <a href="mailto:jgbalajinfinity006@gmail.com">jgbalajinfinity006@gmail.com</a>
+                            </p>
+                          </div>
+                        </div>
             <div style={{ display: 'flex', gap: '0.75rem' }}>
               <FiClock color="var(--gold)" size={22} />
               <div>
