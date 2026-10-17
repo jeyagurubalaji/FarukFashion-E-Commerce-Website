@@ -27,12 +27,27 @@ export default function About() {
           <li><strong>Wide Variety</strong> — Bags for every age and occasion</li>
           <li><strong>Trusted Service</strong> — 24×7 customer support</li>
         </ul>
-        <h3 style={{ fontFamily: 'var(--font-display)', color: 'var(--gold)', margin: '1.75rem 0 0.75rem' }}>Visit Us</h3>
-        <p>
-          35, Kamarajar Street, Thenkarai,<br />
-          Periyakulam-625 601<br />
-          WhatsApp / Call: <a href="tel:+916369456650">+91 6369456650</a>
-        </p>
+                <h3 style={{ fontFamily: 'var(--font-display)', color: 'var(--gold)', margin: '1.75rem 0 0.75rem' }}>
+                  Visit Us
+                </h3>
+                <p>
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=35+Kamarajar+Street+Thenkarai+Periyakulam+625601"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    35, Kamarajar Street, Thenkarai,
+                    <br />
+                    Periyakulam-625 601
+                  </a>
+                  <br />
+                  WhatsApp / Call:{' '}
+                  <a href="https://wa.me/916369456650" target="_blank" rel="noreferrer">
+                    +91 6369456650
+                  </a>
+                  {' · '}
+                  <a href="tel:+916369456650">Call</a>
+                </p>
       </div>
     </div>
   );
