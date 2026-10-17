@@ -61,20 +61,36 @@ export default function Footer() {
             <Link to="/contact">Contact</Link>
           </div>
 
-          <div className="footer-contact">
-            <h4>Visit Us</h4>
-            <p><FiMapPin /> 35, Kamarajar Street, Thenkarai,<br />Periyakulam-625 601</p>
-            <p><FiPhone /> <a href="tel:+916369456650">+91 6369456650</a></p>
-            <p><FiMail /> jgbalajinfinity006@gmail.com</p>
-            <a
-              href="https://wa.me/916369456650"
-              target="_blank"
-              rel="noreferrer"
-              className="btn btn-primary footer-wa"
-            >
-              Chat on WhatsApp
-            </a>
-          </div>
+                    <div className="footer-contact">
+                      <h4>Visit Us</h4>
+                      <p>
+                        <FiMapPin />{' '}
+                        <a
+                          href="https://www.google.com/maps/search/?api=1&query=35+Kamarajar+Street+Thenkarai+Periyakulam+625601"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          35, Kamarajar Street, Thenkarai,
+                          <br />
+                          Periyakulam-625 601
+                        </a>
+                      </p>
+                      <p>
+                        <FiPhone /> <a href="tel:+916369456650">+91 6369456650</a>
+                      </p>
+                      <p>
+                        <FiMail />{' '}
+                        <a href="mailto:jgbalajinfinity006@gmail.com">jgbalajinfinity006@gmail.com</a>
+                      </p>
+                      <a
+                        href="https://wa.me/916369456650"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="btn btn-primary footer-wa"
+                      >
+                        Chat on WhatsApp
+                      </a>
+                    </div>
         </div>
       </div>
 
