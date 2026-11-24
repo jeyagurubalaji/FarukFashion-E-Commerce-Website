@@ -80,11 +80,11 @@ export default function Contact() {
               <div>
                 <strong style={{ color: 'var(--text-primary)' }}>Phone / WhatsApp</strong>
                 <p style={{ marginTop: 4 }}>
-                  <a href="https://wa.me/916369456650" target="_blank" rel="noreferrer">
-                    +91 6369456650
+                  <a href="https://wa.me/919344282751" target="_blank" rel="noreferrer">
+                    +91 9344282751
                   </a>
                   {' · '}
-                  <a href="tel:+916369456650">Call</a>
+                  <a href="tel:+919344282751">Call</a>
                 </p>
               </div>
             </div>
@@ -93,7 +93,7 @@ export default function Contact() {
               <div>
                 <strong style={{ color: 'var(--text-primary)' }}>Email</strong>
                 <p style={{ fontSize: '0.9rem', marginTop: 4 }}>
-                  <a href="mailto:jgbalajinfinity006@gmail.com">jgbalajinfinity006@gmail.com</a>
+                  <a href="mailto:farukfashion1506@gmail.com">farukfashion1506@gmail.com</a>
                 </p>
               </div>
             </div>
@@ -108,7 +108,7 @@ export default function Contact() {
             </div>
           </div>
           <a
-            href="https://wa.me/916369456650"
+            href="https://wa.me/919344282751"
             target="_blank"
             rel="noreferrer"
             className="btn btn-primary"
