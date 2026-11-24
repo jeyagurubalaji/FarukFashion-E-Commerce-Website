@@ -41,28 +41,30 @@ export default function App() {
     location.pathname === '/forgot-password';
 
   return (
-      <div className="app">
-        <ScrollToTop />
-        {!isAdmin && !isAuthPage && <Navbar />}
-        <main style={{ minHeight: isAdmin || isAuthPage ? '100vh' : 'calc(100vh - 200px)' }}>
-          <Routes>
+    <div className="app">
+      <ScrollToTop />
+      {!isAdmin && !isAuthPage && <Navbar />}
+      <main style={{ minHeight: isAdmin || isAuthPage ? '100vh' : 'calc(100vh - 200px)' }}>
+        <Routes>
           {/* Public auth pages */}
           <Route path="/login" element={<PublicOnly><Login /></PublicOnly>} />
           <Route path="/oauth-callback" element={<OAuthCallback />} />
           <Route path="/register" element={<PublicOnly><Register /></PublicOnly>} />
           <Route path="/forgot-password" element={<PublicOnly><ForgotPassword /></PublicOnly>} />
 
-          {/* Store — requires login */}
-          <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-          <Route path="/products" element={<ProtectedRoute><Products /></ProtectedRoute>} />
-          <Route path="/products/category/:category" element={<ProtectedRoute><Products /></ProtectedRoute>} />
-          <Route path="/products/:id" element={<ProtectedRoute><ProductDetail /></ProtectedRoute>} />
-          <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+          {/* Public storefront & browsing */}
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/category/:category" element={<Products />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+
+          {/* Purchase & account routes — require login */}
           <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
-          <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
-          <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
 
           {/* Admin panel */}
           <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
