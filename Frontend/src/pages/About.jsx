@@ -42,11 +42,11 @@ export default function About() {
                   </a>
                   <br />
                   WhatsApp / Call:{' '}
-                  <a href="https://wa.me/916369456650" target="_blank" rel="noreferrer">
-                    +91 6369456650
+                  <a href="https://wa.me/919344282751" target="_blank" rel="noreferrer">
+                    +91 9344282751
                   </a>
                   {' · '}
-                  <a href="tel:+916369456650">Call</a>
+                  <a href="tel:+919344282751">Call</a>
                 </p>
       </div>
     </div>
