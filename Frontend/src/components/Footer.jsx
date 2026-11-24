@@ -76,14 +76,14 @@ export default function Footer() {
                         </a>
                       </p>
                       <p>
-                        <FiPhone /> <a href="tel:+916369456650">+91 6369456650</a>
+                        <FiPhone /> <a href="tel:+919344282751">+91 9344282751</a>
                       </p>
                       <p>
                         <FiMail />{' '}
-                        <a href="mailto:jgbalajinfinity006@gmail.com">jgbalajinfinity006@gmail.com</a>
+                        <a href="mailto:farukfashion1506@gmail.com">farukfashion1506@gmail.com</a>
                       </p>
                       <a
-                        href="https://wa.me/916369456650"
+                        href="https://wa.me/919344282751"
                         target="_blank"
                         rel="noreferrer"
                         className="btn btn-primary footer-wa"
